@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eliminar Producto</title>
+</head>
+<body>
+    <div style="text-align: center;">
+        <h2>Productos - Eliminar</h2><br>
+        <form action="{% url 'productoDel' producto.id %}" method="POST">
+            {% csrf_token %}
+            <pre>¿Está seguro que desea eliminar el producto: {{ producto.nombre }}?</pre>
+            <input type="submit" value="Eliminar">
+        </form><br><br>
+        <a href="{% url 'productoCrud' %}">Volver</a>
+        <br>
+        <div id="idMensajes">
+            {% if mensaje %}
+                {{ mensaje }}
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

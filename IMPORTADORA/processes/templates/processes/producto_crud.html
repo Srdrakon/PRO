@@ -1,0 +1,42 @@
+{% extends './base.html' %}
+{% block title %}Lista de Productos{% endblock %}
+
+{% block content %}
+
+   
+        <thead>
+            <tr>
+                <tr>"--------------------------------------"
+                </tr><br>
+            </tr>
+        </thead>
+        <tbody>
+            {% for producto in productos %}
+            <tr>
+                <td>|   ID Producto   :</td>
+                <td>|   {{ producto.id }}   |</td>
+                <br>
+                <td>|   Nombre Producto   :</td>
+                <td>|   {{ producto.nombre }}   |</td>
+                <br>
+                <td>|   Descripcion Producto   :</td>
+                <td>|   {{ producto.descripcion }}   |</td>
+                <br>
+                <td>|   Precio Producto   :</td>
+                <td>|   {{ producto.precio }}   |</td>
+                <br>
+                <td>|   Stock Producto   :</td>
+                <td>|   {{ producto.stock }}   |</td>
+                <td>
+                    <br>
+                    <a href="{% url 'productoEdit' producto.id %}">Editar</a>
+                    <a href="{% url 'productoDel' producto.id %}">Eliminar</a>
+                </td><br>
+                <tr>"--------------------------------------"
+                </tr><br>
+            </tr>
+            {% endfor %}
+        </tbody>
+    
+
+    {% endblock %}

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+    <script src="{% static 'style.js' %}"></script>
+</head>
+<body>
+    <h2>Bienvenido, {{ request.user.username }}</h2>
+    <form method="POST" action="{% url 'logout' %}">
+        {% csrf_token %}
+        <button type="submit">Cerrar Sesión</button>
+    </form>
+    <a href="{% url 'update_user' %}">Modificar Información</a>
+    <a href="{% url 'delete_user' %}">Eliminar Cuenta</a>
+    {% if request.user.is_admin %}
+        <a href="{% url 'manage_users' %}">Administrar Usuarios</a>
+    {% endif %}
+</body>
+</html>

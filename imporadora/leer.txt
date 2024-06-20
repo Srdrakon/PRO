@@ -1,0 +1,12 @@
+entorno virtual importadora 
+
+proyecto larrain
+
+aplicacion processes
+
+django 4.1.2
+
+super user 
+Username : admin 
+Password: importadora2024
+

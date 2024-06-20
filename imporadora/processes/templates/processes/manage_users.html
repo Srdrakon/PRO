@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administrar Usuarios</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+    <script src="{% static 'style.js' %}"></script>
+</head>
+<body>
+    <h2>Administrar Usuarios</h2>
+    <ul>
+        {% for user in users %}
+            <li>
+                {{ user.username }} - {{ user.email }}<br><br>
+                {% if not user.is_active %}
+                    <form method="POST" action="{% url 'approve_admin' user.id %}" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit">Aprobar</button>
+                    </form>
+                {% endif %}
+                
+                <br>
+                <form method="POST" action="{% url 'delete_user_admin' user.id %}" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit">Eliminar</button>
+                </form>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

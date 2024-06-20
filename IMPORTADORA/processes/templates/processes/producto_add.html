@@ -1,0 +1,28 @@
+{% extends './base.html' %}
+{% block title %}Agregar Producto{% endblock %}
+
+{% block content %}
+
+<div style="text-align: center;">
+    <h2> Productos - Agregar </h2><br>
+    <form action="{% url 'productoAdd' %}" method="POST">
+        {% csrf_token %}
+        <pre>Nombre del Producto:
+        <input type="text" name="nombre"></pre>
+        <pre>Descripción:
+        <input type="text" name="descripcion"></pre>
+        <pre>Precio:
+        <input type="number" name="precio" step="0.01"></pre>
+        <pre>Stock:
+        <input type="number" name="stock"></pre>
+        <input type="submit" value="Agregar">
+    </form><br><br>
+    <a href="{% url 'productoCrud' %}">Volver</a>
+    <br>
+    <div id="idMensajes">
+        {% if mensaje %}
+            {{ mensaje }}
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
