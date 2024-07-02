@@ -3,17 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Actualizar Información</title>
+    <title>Cliente Dashboard</title>
     {% load static %}
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
     <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- Custom JavaScript -->
     <script src="{% static 'style.js' %}"></script>
 </head>
 <body>
-    <h2>Actualizar Información</h2>
-    <form method="POST" action="">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Actualizar</button>
-    </form>
+    <div style="text-align: center;">
+        {% if user %}
+            <h2>Formulario actualizar usuario</h2><br>
+            <form action="{% url 'update_user' user.id %}" method="POST">
+                {% csrf_token %}
+                <pre>Nombre de usuario: <input type="text" name="username" value="{{ user.username }}"></pre>
+                <pre>Correo electrónico: <input type="text" name="email" value="{{ user.email }}"></pre>
+                <pre>Teléfono: <input type="text" name="telefono" value="{{ user.telefono }}"></pre>
+                <pre>Dirección: <input type="text" name="direccion" value="{{ user.direccion }}"></pre>
+                <pre>Nombre: <input type="text" name="nombre" value="{{ user.nombre }}"></pre>
+                <pre>Apellido: <input type="text" name="apellido" value="{{ user.apellido }}"></pre>
+                <pre>RUT: <input type="text" name="rut" value="{{ user.rut }}"></pre>
+                <input type="submit" value="Actualizar">
+            </form><br>
+        {% endif %}
+        <br>
+        <div id="idMensajes">
+            {% if messages %}
+                {% for message in messages %}
+                    <p>{{ message }}</p>
+                {% endfor %}
+            {% endif %}
+        </div>
+        <br>
+        <a href="{% url 'manage_users' %}">Volver</a>
+    </div>
 </body>
 </html>

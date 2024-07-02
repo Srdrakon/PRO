@@ -5,10 +5,62 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Administrativo Dashboard</title>
     {% load static %}
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
     <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- Custom JavaScript -->
     <script src="{% static 'style.js' %}"></script>
+    <style>
+        .navbar-brand img {
+            max-height: 50px; /* Ajusta el tamaño máximo de la imagen */
+            margin-right: 1px; /* Espacio entre la imagen y el texto */
+        }
+    </style>
 </head>
 <body>
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <a class="navbar-brand" href="#">
+        <img src="{% static '../static/logo2.png' %}" alt="Logo Empresa" height="50">
+        Panel de Administrador
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'producto_list' %}">Gestión de Productos</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Gestor de Pedidos</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'manage_users' %}">Gestor de Usuarios</a>
+            </li>
+            {% if user.is_authenticated %}
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'profile' %}">Perfil</a>
+            </li>
+            {% endif %}
+            <li class="nav-item">
+                <form method="POST" action="{% url 'logout' %}" style="display: inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="nav-link btn btn-link" style="display: inline; ">Cerrar Sesión</button>
+                </form>
+            </li>
+        </ul>
+    </div>
+</nav>
+</nav>
+<br>
+<!-- Contenido del dashboard -->
+<div class="container mt-5">
     <h2>Bienvenido, {{ request.user.username }}</h2>
     <h1>Panel de Administrador</h1>
     <h2>Total de Usuarios: {{ user_count }}</h2>
@@ -24,12 +76,7 @@
         <li>{{ user.username }} - {{ user.date_joined }}</li>
         {% endfor %}
     </ul>
-    <form method="POST" action="{% url 'logout' %}">
-        {% csrf_token %}
-        <button type="submit">Cerrar Sesión</button>
-    </form>
-    <a href="{% url 'update_user' %}">Modificar Información</a>
-    <a href="{% url 'delete_user' %}">Eliminar Cuenta</a>
-    <a href="{% url 'manage_users' %}">Administrar Usuarios</a>
+</div>
+
 </body>
 </html>

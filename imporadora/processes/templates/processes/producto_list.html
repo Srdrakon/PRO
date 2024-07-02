@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Productos</title>
+    {% load static %}
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- Custom JavaScript -->
+    <script src="{% static 'style.js' %}"></script>
+</head>
+<body>
+    <div class="container">
+        <h2 class="text-center">Lista de Productos</h2>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Código</th>
+                    <th>Nombre</th>
+                    <th>Descripción</th>
+                    <th>Proveedor</th>
+                    <th>Stock</th>
+                    <th>Disponibilidad de Venta</th>
+                    <th>Disponibilidad de Despacho</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for producto in productos %}
+                    <tr>
+                        <td>{{ producto.codigo }}</td>
+                        <td>{{ producto.nombre }}</td>
+                        <td>{{ producto.descripcion }}</td>
+                        <td>{{ producto.proveedor }}</td>
+                        <td>{{ producto.stock }}</td>
+                        <td>{{ producto.get_disponibilidad_venta_display }}</td>
+                        <td>{{ producto.get_disponibilidad_despacho_display }}</td>
+                        <td>
+                            <a href="{% url 'producto_edit' producto.id %}" class="btn btn-warning">Editar</a>
+                            <a href="{% url 'producto_delete' producto.id %}" class="btn btn-danger">Eliminar</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <a href="{% url 'producto_add' %}" class="btn btn-primary">Añadir Producto</a>
+        <br><br>
+        <a href="{% url 'admin_dashboard' %}" class="btn btn-secondary">Volver al Inicio</a>
+    </div>
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+</body>
+</html>
