@@ -9,15 +9,25 @@
     <script src="{% static 'style.js' %}"></script>
 </head>
 <body>
-    <h2>Bienvenido, {{ request.user.username }}</h2>
-    <form method="POST" action="{% url 'logout' %}">
-        {% csrf_token %}
-        <button type="submit">Cerrar Sesión</button>
-    </form>
-    <a href="{% url 'update_user' %}">Modificar Información</a>
-    <a href="{% url 'delete_user' %}">Eliminar Cuenta</a>
-    {% if request.user.is_admin %}
-        <a href="{% url 'manage_users' %}">Administrar Usuarios</a>
-    {% endif %}
+    <div style="text-align: center;">
+        <h1>Dashboard de Usuarios</h1>
+        <table>
+            <tr>
+                <th>Nombre de usuario</th>
+                <th>Email</th>
+                <th>Acciones</th>
+            </tr>
+            {% for user in users %}
+            <tr>
+                <td>{{ user.username }}</td>
+                <td>{{ user.email }}</td>
+                <td>
+                    <a href="{% url 'update_user' user.id %}">Editar</a>
+                    <a href="{% url 'delete_user_view' user.id %}">Eliminar</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
 </body>
 </html>

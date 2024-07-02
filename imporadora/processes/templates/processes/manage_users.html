@@ -3,31 +3,92 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Administrar Usuarios</title>
+    <title>Cliente Dashboard</title>
     {% load static %}
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
     <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- Custom JavaScript -->
     <script src="{% static 'style.js' %}"></script>
 </head>
 <body>
-    <h2>Administrar Usuarios</h2>
-    <ul>
-        {% for user in users %}
-            <li>
-                {{ user.username }} - {{ user.email }}<br><br>
-                {% if not user.is_active %}
-                    <form method="POST" action="{% url 'approve_admin' user.id %}" style="display:inline;">
-                        {% csrf_token %}
-                        <button type="submit">Aprobar</button>
-                    </form>
+    <div class="container mt-5">
+        <div class="text-center mb-4">
+            <h1>Gestionar Usuarios</h1>
+        </div>
+
+        <!-- Mensajes de Django -->
+        {% if messages %}
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    {% for message in messages %}
+                        <div class="alert {% if message.tags %}alert-{{ message.tags }}{% else %}alert-info{% endif %} alert-dismissible fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover">
+                {% if users %}
+                    <thead class="thead-light">
+                        <tr>
+                            <th>Nombre de usuario</th>
+                            <th>Correo electrónico</th>
+                            <th>Teléfono</th>
+                            <th>Dirección</th>
+                            <th>Nombre</th>
+                            <th>Apellido</th>
+                            <th>RUT</th>
+                            <th>Eliminar</th>
+                            <th>Modificar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for user in users %}
+                        <tr>
+                            <td>{{ user.username }}</td>
+                            <td>{{ user.email }}</td>
+                            <td>{{ user.telefono }}</td>
+                            <td>{{ user.direccion }}</td>
+                            <td>{{ user.nombre }}</td>
+                            <td>{{ user.apellido }}</td>
+                            <td>{{ user.rut }}</td>
+                            <td><a href="{% url 'delete_user_view' user.id %}" class="btn btn-danger btn-sm">Eliminar</a></td>
+                            <td><a href="{% url 'update_user' user.id %}" class="btn btn-primary btn-sm">Modificar</a></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                {% else %}
+                    <tr>
+                        <td colspan="9" class="text-center">No hay usuarios disponibles.</td>
+                    </tr>
                 {% endif %}
-                
-                <br>
-                <form method="POST" action="{% url 'delete_user_admin' user.id %}" style="display:inline;">
-                    {% csrf_token %}
-                    <button type="submit">Eliminar</button>
-                </form>
-            </li>
-        {% endfor %}
-    </ul>
+            </table>
+        </div>
+
+        <div class="text-center mt-4">
+            <a href="{% url 'register' %}" class="btn btn-success btn-lg">Agregar Nuevo Usuario</a>
+        </div>
+
+        <div class="text-center mt-2">
+            <a href="{% url 'admin_dashboard' %}" class="btn btn-secondary btn-sm">Volver</a>
+        </div>
+    </div>
+<script>
+    $(document).ready(function(){
+        $("#idMensaje").delay(2000).fadeOut("slow");
+    });
+</script>
 </body>
 </html>
